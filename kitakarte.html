@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kitas Dresden</title>
+
+  <link rel="stylesheet" href="http://static.lyrk.de/leaflet/0.7/leaflet.css" />
+  
+  <script src="http://static.lyrk.de/leaflet/0.7/leaflet.js"></script>
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  
+  <style type="text/css">
+    #map { height:100%; width:100%; position: absolute; }
+    body, html {margin: 0px; padding: 0px;}
+  </style>
+</head>
+
+<body>
+<div id='map'></div>
+
+<script type="text/javascript"> 
+
+  var map = L.map('map').setView([51.0433734,13.7572839], 13);
+
+  if(L.Browser.retina) var tp = "lr";
+  else var tp = "ls";
+
+  L.tileLayer('http://tiles.lyrk.org/'+tp+'/{z}/{x}/{y}?apikey=04f5c0abaa2a47aa84263b597d5b17cb', {
+    attribution: '<a href="http://geodienste.lyrk.de/copyright">Lizenzinformationen</a>, Tiles by <a href="http://geodienste.lyrk.de/">Lyrk</a>',
+    maxZoom: 18 
+  }).addTo(map);
+
+
+  //Externes geoJson-File laden.
+  $.getJSON("dd.geojson", function (data) {
+    var kitas = L.geoJson(data);
+    kitas.addTo(map);
+  });
+</script>
+
+</body>
+</html>
